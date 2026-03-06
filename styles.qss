@@ -1,0 +1,31 @@
+/* 
+TUGAS FRONTEND DESIGNER: 
+Percantik tampilan aplikasi di sini. Ganti warna, font, dll.
+*/
+
+QMainWindow {
+    background-color: #f5f6fa;
+}
+
+QPushButton {
+    background-color: #27ae60;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: #2ecc71;
+}
+
+QTableWidget {
+    background-color: white;
+    gridline-color: #dcdde1;
+}
+
+QHeaderView::section {
+    background-color: #34495e;
+    color: white;
+    padding: 5px;
+}

@@ -1,0 +1,45 @@
+# ============================================================
+# 📦 AMUNISI WAJIB KELOMPOK B6 (Requirements)
+# ============================================================
+# Halo guys! Ini daftar software yang harus kita instal biar 
+# program News Scraper kita jalan. 
+#
+# CARA INSTAL SEKALIGUS (REKOMENDASI): 
+# Buka Terminal/CMD, terus ketik: pip install -r requirements.txt
+# ============================================================
+
+# 1. PyQt6 
+# Ini "Bodi & Dashboard" aplikasi kita. Bikin tombol & jendela.
+# (Tugas: Lead Dev & Frontend)
+PyQt6
+# Command: pip install PyQt6
+
+# 2. selenium
+# Ini "Robot Otomatis" kita. Dia yang bertugas buka Chrome sendiri.
+# (Tugas: Backend Specialist)
+selenium
+# Command: pip install selenium
+
+# 3. beautifulsoup4
+# Ini Buat motong-motong kode HTML web.
+# (Tugas: Backend Specialist)
+beautifulsoup4
+# Command: pip install beautifulsoup4
+
+# 4. pandas
+# Ini "Manajer Data" kita. Untuk ngurusin tabel.
+# (Tugas: Data Engineer)
+pandas
+# Command: pip install pandas
+
+# 5. openpyxl
+# Ini "Mesin Cetak" Excel-nya. Biar bisa bikin file .xlsx.
+# (Tugas: Data Engineer)
+openpyxl
+# Command: pip install openpyxl
+
+# 6. webdriver-manager
+# Otomatis download driver Chrome yang cocok sama laptop kalian.
+# (Tugas: Biar nggak dapet error "Driver Not Found")
+webdriver-manager
+# Command: pip install webdriver-manager
