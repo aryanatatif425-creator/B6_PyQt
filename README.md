@@ -1,81 +1,72 @@
-# 🚀 B6 NEWS SCRAPER PRO - PANDUAN TIM
+# B6 News Scrapper Pro
 
-Gunakan panduan ini agar pengerjaan lancar. Baca pelan-pelan ya, guys!
-
----
-
-## 🛑 Step 0: Syarat Wajib (Sebelum Mulai)
-Pastikan laptop kalian sudah punya dua barang ini:
-1.  **Python 3.10 ke atas:** Pas instal, **WAJIB CENTANG** kotak "Add Python to PATH".
-2.  **Google Chrome:** Versi terbaru. (Kita pake Selenium, jadi butuh Chrome).
+Aplikasi Desktop berbasis **Python** untuk melakukan scraping berita secara otomatis dari berbagai portal berita digital menggunakan **Selenium** dan **BeautifulSoup4**. Dirancang dengan antarmuka **PyQt6** yang modern dan responsif.
 
 ---
 
-## 🛠️ Step 1: Persiapan (Cara Install Library)
+## Fitur Utama
 
-1.  **Buka Terminal di Folder Ini:**
-    *   Buka folder `B6_PyQt` di File Explorer.
-    *   Klik kanan di area kosong sambil tekan tombol **Shift** di keyboard.
-    *   Pilih **"Open PowerShell window here"** atau **"Open in Terminal"**.
-
-2.  **Install Amunisi (Library):**
-    Ketik perintah ini di terminal, lalu Enter:
-    ```
-    pip install -r requirements.txt
-    ```
+- **General Heuristic Scraper**: Mampu mengekstraksi data dari berbagai portal berita (Kompas, Detik, Tempo, dll.) secara otomatis tanpa konfigurasi khusus per website.
+- **Date Range Filtering**: Fitur filter berita berdasarkan rentang tanggal tertentu (Start Date - End Date).
+- **Multi-threaded Processing**: Proses scraping berjalan di latar belakang (*background thread*), sehingga aplikasi tetap responsif dan tidak *freeze*.
+- **Interactive Results Table**: Menampilkan hasil secara real-time. Klik dua kali (**Double-Click**) pada baris tabel untuk membuka artikel di browser.
+- **Excel Export**: Menyimpan hasil scraping langsung ke format file **.xlsx** (Excel).
+- **Automated Logging**: Dilengkapi dengan status log dan *progress bar* untuk memantau proses scraping.
+- **Unit Testing Ready**: Tersedia skrip pengujian otomatis untuk memastikan keandalan sistem.
 
 ---
 
-## ❓ Solusi Jika Ada Error (Troubleshooting)
+## Prasyarat (Prerequisites)
 
-**1. Muncul Error: "pip is not recognized"**
-*   **Artinya:** Python belum masuk ke PATH Windows kalian.
-*   **Solusi:** Coba ganti perintahnya jadi:
-    ```
-    python -m pip install -r requirements.txt
-    ```
-    Atau:
-    ```
-    py -m pip install -r requirements.txt
-    ```
-
-**2. Muncul Error: "Python was not found"**
-*   **Solusi:** Kalian harus install ulang Python dan pastikan centang **"Add Python to PATH"** saat di awal instalasi.
+Sebelum menjalankan aplikasi, pastikan sistem Anda memiliki:
+1. **Python 3.8** atau versi yang lebih baru.
+2. **Google Chrome Browser** (Versi terbaru).
+3. Koneksi internet yang stabil.
 
 ---
 
-## 📜 PERJANJIAN DATA (KONTRAK WAJIB)
-Biar program kita nggak crash pas digabungin, semua data berita **WAJIB** pake format ini:
+## Panduan Instalasi
 
-**Satu Berita = Dictionary**
-```python
-{
-    "url": "https://...",      # Wajib Teks (String)
-    "title": "Judul Berita",   # Wajib Teks (String)
-    "date": date_object,       # Wajib Objek datetime.date (Bukan Teks!)
-    "content": "Isi berita..." # Wajib Teks (String)
-}
+1. **Clone/Download Proyek**: Unduh seluruh isi folder ini.
+2. **Instal Dependensi**: Buka terminal/CMD di folder proyek dan jalankan perintah:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## Cara Penggunaan
+
+1. **Jalankan Aplikasi**:
+   ```bash
+   python main.py
+   ```
+2. **Input URL Target**: Masukkan link utama berita (Homepage atau halaman Kategori).
+3. **Set Limit**: Tentukan berapa banyak link berita yang ingin dicari (Default: 10).
+4. **Set Filter Tanggal**: Pilih rentang tanggal berita yang ingin diambil.
+5. **Mulai Scraping**: Klik tombol **"START SCRAPING"**.
+6. **Buka Artikel**: Klik dua kali pada baris di tabel untuk membaca berita di browser.
+7. **Ekspor Data**: Klik tombol **"EXPORT EXCEL"** untuk menyimpan semua data hasil filter ke file Excel.
+
+---
+
+## Pengujian Sistem (Testing)
+
+Untuk memastikan semua modul (Scraper, Database, dan Driver) berfungsi dengan baik di perangkat Anda, jalankan perintah:
+```bash
+python test_scraper.py
 ```
 
 ---
 
-## 👥 SIAPA KERJAIN APA?
-Gue (Arya) udah nyiapin "rumah" masing-masing. Kalian cuma boleh edit bagian yang ada tanda `# TODO`:
+##  Struktur Proyek
 
-1.  **Lead Dev (Arya):** Integrasi `main.py` dan bantu kalian kalau mentok.
-2.  **Backend Specialist:** Fokus di `scraper.py` (Bikin robot Selenium).
-3.  **Frontend Designer:** Fokus di `styles.qss` dan `main.py` bagian `init_ui`.
-4.  **Data Engineer:** Fokus di `database.py` (SQLite & Ekspor Excel).
-5.  **QA Engineer:** Fokus di `test_scraper.py` (Tes kualitas kerjaan Backend).
-
----
-
-## 🏃‍♂️ Cara Menjalankan Aplikasi
-Kalau semua sudah siap, ketik:
-```
-python main.py
-```
-*(Kalau gagal, coba `py main.py`)*
+- `main.py`: Kode utama untuk antarmuka GUI dan logika threading.
+- `scraper.py`: Mesin pencari berita (Selenium & BeautifulSoup).
+- `database.py`: Logika penyimpanan SQLite dan fitur ekspor Excel.
+- `styles.qss`: File desain tema (Blue-Green Emerald).
+- `test_scraper.py`: Skrip pengujian otomatis (Unit Testing).
+- `requirements.txt`: Daftar pustaka Python yang diperlukan.
+- `Laporan_Arsitektur.md`: Penjelasan teknis mengenai cara kerja sistem.
 
 ---
-**Semangat,Gusy**

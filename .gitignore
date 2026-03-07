@@ -1,0 +1,21 @@
+# --- FILE SAMPAH PYTHON ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- DATABASE (HASIL KERJA) ---
+*.db
+*.sqlite
+
+# --- LOGS (CATATAN ERROR) ---
+*.log
+
+# --- EXCEL (HASIL EKSPOR) ---
+*.xlsx
+*.csv
+
+# --- VIRTUAL ENVIRONMENT ---
+venv/
+.venv/
+env/
