@@ -70,3 +70,12 @@ python test_scraper.py
 - `Laporan_Arsitektur.md`: Penjelasan teknis mengenai cara kerja sistem.
 
 ---
+
+## Tangkapan Layar Program
+
+- <img width="1835" height="1045" alt="Screenshot 2026-03-07 214445" src="https://github.com/user-attachments/assets/7fc5d135-c8dc-449c-98d5-d3df2c41d7bc" />
+- <img width="1919" height="1079" alt="Screenshot 2026-03-07 214414" src="https://github.com/user-attachments/assets/62ff5b57-2aa9-4283-b57c-50295b7fdd16" />
+- <img width="1915" height="1065" alt="Screenshot 2026-03-07 213644" src="https://github.com/user-attachments/assets/2ba3589a-2372-416e-8526-64180d6638b2" />
+- <img width="1919" height="1079" alt="Screenshot 2026-03-07 212322" src="https://github.com/user-attachments/assets/aa6fa3b3-06e4-40de-8cbe-60f727797596" />
+
+
