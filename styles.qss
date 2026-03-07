@@ -1,31 +1,106 @@
-/* 
-TUGAS FRONTEND DESIGNER: 
-Percantik tampilan aplikasi di sini. Ganti warna, font, dll.
-*/
+/* Modern Blue-Green Theme for B6 News Scrapper */
+QWidget {
+    background-color: #0f172a; /* Deep Navy */
+    color: #f1f5f9;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    outline: none; /* Menghilangkan outline fokus global */
+}
 
-QMainWindow {
-    background-color: #f5f6fa;
+QGroupBox {
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
+    font-weight: bold;
+    color: #38bdf8; /* Sky Blue */
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+}
+
+QLineEdit, QDateEdit {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px;
+    color: #f1f5f9;
+    outline: none;
+}
+
+QLineEdit:focus, QDateEdit:focus {
+    border: 1px solid #10b981; /* Emerald Green */
 }
 
 QPushButton {
-    background-color: #27ae60;
-    color: white;
+    background-color: #38bdf8;
+    color: #0f172a;
+    border-radius: 6px;
+    padding: 10px 20px;
     font-weight: bold;
-    border-radius: 5px;
-    padding: 10px;
+    border: none;
+    outline: none;
 }
 
 QPushButton:hover {
-    background-color: #2ecc71;
+    background-color: #7dd3fc;
+}
+
+QPushButton:pressed {
+    background-color: #0ea5e9;
+}
+
+QPushButton#export_btn {
+    background-color: #10b981; /* Emerald */
+    color: #0f172a;
+}
+
+QPushButton#export_btn:hover {
+    background-color: #34d399;
+}
+
+QProgressBar {
+    border: 1px solid #1e293b;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #1e293b;
+    outline: none;
+}
+
+QProgressBar::chunk {
+    background-color: #10b981;
+    border-radius: 4px;
 }
 
 QTableWidget {
-    background-color: white;
-    gridline-color: #dcdde1;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    gridline-color: transparent;
+    border-radius: 8px;
+    outline: none;
 }
 
 QHeaderView::section {
-    background-color: #34495e;
-    color: white;
-    padding: 5px;
+    background-color: #1e293b;
+    color: #38bdf8;
+    padding: 8px;
+    border: none;
+    font-weight: bold;
+    outline: none;
+}
+
+QTableWidget::item {
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+QTableWidget::item:selected {
+    background-color: #1e293b;
+    color: #10b981;
+    border-left: 3px solid #10b981;
+    outline: none;
 }
