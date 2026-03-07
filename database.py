@@ -1,38 +1,61 @@
 import sqlite3
 import pandas as pd
+from datetime import datetime
 
 class NewsDatabase:
-    """
-    TUGAS DATA ENGINEER:
-    Fokus di file ini untuk mengurus penyimpanan data (SQLite & Excel).
-    """
-    def __init__(self, db_name="news_b6.db"):
+    def __init__(self, db_name="news_scraper.db"):
         self.db_name = db_name
         self.create_table()
 
     def create_table(self):
-        """
-        TUGAS DATA ENGINEER: Buat tabel SQLite di sini.
-        """
         conn = sqlite3.connect(self.db_name)
-        # TODO: Jalankan perintah CREATE TABLE IF NOT EXISTS
-        # Kolom: url (TEXT PRIMARY KEY), title (TEXT), date (TEXT), content (TEXT)
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS articles (
+                url TEXT PRIMARY KEY,
+                title TEXT,
+                publish_date TEXT,
+                content TEXT,
+                scraped_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
         conn.commit()
         conn.close()
 
     def save_article(self, data):
-        """
-        TUGAS DATA ENGINEER: Simpan satu data berita (dict) ke database.
-        """
         conn = sqlite3.connect(self.db_name)
-        # TODO: Jalankan perintah INSERT OR IGNORE INTO
-        conn.commit()
-        conn.close()
+        cursor = conn.cursor()
+        try:
+            # Pastikan publish_date dalam format YYYY-MM-DD untuk kemudahan filter
+            cursor.execute('''
+                INSERT OR IGNORE INTO articles (url, title, publish_date, content)
+                VALUES (?, ?, ?, ?)
+            ''', (data['url'], data['title'], data['date'], data['content']))
+            conn.commit()
+        except Exception as e:
+            print(f"Database Error: {e}")
+        finally:
+            conn.close()
 
-    def export_to_excel(self, file_path):
-        """
-        TUGAS DATA ENGINEER: Ambil data dari SQLite lalu simpan ke Excel.
-        """
+    def get_filtered_articles(self, start_date=None, end_date=None):
         conn = sqlite3.connect(self.db_name)
-        # TODO: Gunakan Pandas read_sql_query dan to_excel
+
+        query = "SELECT publish_date, title, url FROM articles"
+        params = []
+        
+        if start_date and end_date:
+            query += " WHERE publish_date BETWEEN ? AND ?"
+            params = [start_date, end_date]
+            
+        df = pd.read_sql_query(query, conn, params=params)
         conn.close()
+        return df
+
+    def export_to_excel(self, file_path, start_date=None, end_date=None):
+        try:
+            df = self.get_filtered_articles(start_date, end_date)
+            df.to_excel(file_path, index=False)
+            return True
+        except Exception as e:
+            print(f"Export Error: {e}")
+            return False
