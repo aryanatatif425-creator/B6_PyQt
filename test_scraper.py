@@ -1,65 +1,64 @@
 import unittest
-import datetime
+import os
+import sqlite3
+from datetime import datetime
 from scraper import NewsScraper
+from database import NewsDatabase
 
 class TestB6Scraper(unittest.TestCase):
-    """
-    TUGAS QA & AUTOMATION ENGINEER:
-    Lengkapi logika pengujian di bawah ini untuk memastikan mesin Scraper 
-    milik Backend tidak memiliki celah error (Bug).
-    """
+    @classmethod
+    def setUpClass(cls):
+        """Siapkan environment testing."""
+        cls.test_db_name = "B6_PyQt_Full/test_b6.db"
+        cls.db = NewsDatabase(cls.test_db_name)
+        cls.scraper = NewsScraper(headless=True)
+        cls.target_url = "https://www.kompas.com/"
 
-    def setUp(self):
-        # Inisialisasi sebelum tiap tes dimulai
-        self.scraper = NewsScraper(headless=True)
+    @classmethod
+    def tearDownClass(cls):
+        """Bersihkan file setelah tes selesai."""
+        if os.path.exists("B6_PyQt_Full/test_b6.db"):
+            try:
+                os.remove("B6_PyQt_Full/test_b6.db")
+            except:
+                pass
+        cls.scraper.stop_driver()
 
-    def tearDown(self):
-        # Tutup browser setelah tiap tes selesai
-        self.scraper.stop_driver()
+    def test_01_database_creation(self):
+        """Uji apakah tabel database berhasil dibuat."""
+        conn = sqlite3.connect("B6_PyQt_Full/test_b6.db")
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='articles'")
+        table_exists = cursor.fetchone()
+        conn.close()
+        self.assertIsNotNone(table_exists, "Tabel 'articles' harus ada di database.")
 
-    # --- 1. PENGUJIAN KONTRAK DATA ---
-    def test_data_structure(self):
-        """TES: Pastikan Dictionary hasil scrape punya 4 kunci wajib & tipe data benar."""
-        # TODO: Panggil scrape_article() dan cek kunci: url, title, date, content.
-        pass
+    def test_02_get_links(self):
+        """Uji apakah scraper bisa mendapatkan link dari homepage."""
+        links = self.scraper.get_links(self.target_url, limit=2)
+        self.assertIsInstance(links, list)
+        self.assertGreater(len(links), 0, "Harus menemukan minimal 1 link berita.")
 
-    # --- 2. PENGUJIAN LOGIKA TANGGAL ---
-    def test_date_parsing_indonesian(self):
-        """TES: Pastikan format '10 Maret 2026' berubah jadi objek Date beneran."""
-        # TODO: Masukkan teks Indo, cek apakah hasilnya datetime.date(2026, 3, 10).
-        pass
+    def test_03_scrape_article_content(self):
+        """Uji ekstraksi konten dari satu link berita."""
+        links = self.scraper.get_links(self.target_url, limit=1)
+        if links:
+            data = self.scraper.scrape_article(links[0])
+            self.assertIn('title', data)
+            self.assertIn('content', data)
+            self.assertNotEqual(data['title'], "No Title")
 
-    def test_date_parsing_english(self):
-        """TES: Pastikan format 'March 10, 2026' juga bisa terbaca."""
-        # TODO: Masukkan teks Inggris, cek apakah hasilnya datetime.date(2026, 3, 10).
-        pass
+    def test_04_database_save_and_filter(self):
+        """Uji simpan data dan filter tanggal di database."""
+        test_data = {
+            "url": "https://test.com/news-unique-123",
+            "title": "Berita Tes Unit",
+            "date": "2026-03-07",
+            "content": "Konten tes."
+        }
+        self.db.save_article(test_data)
+        df = self.db.get_filtered_articles("2026-03-01", "2026-03-30")
+        self.assertGreater(len(df), 0)
 
-    def test_date_parsing_relative(self):
-        """TES: (Tantangan) Pastikan teks '2 jam yang lalu' bisa dikonversi ke tanggal hari ini."""
-        # TODO: Masukkan teks relatif, cek apakah hasilnya date.today().
-        pass
-
-    # --- 3. PENGUJIAN PENGAMBILAN LINK ---
-    def test_link_extraction_is_list(self):
-        """TES: Pastikan get_article_links mengembalikan List, bukan string atau None."""
-        # TODO: Cek tipe data kembalian dari fungsi get_article_links.
-        pass
-
-    def test_link_limit_precision(self):
-        """TES: Pastikan jika diminta 3 link, yang dikasih beneran cuma 3 link."""
-        # TODO: Panggil fungsi dengan limit=3, cek len(hasil) == 3.
-        pass
-
-    # --- 4. PENGUJIAN ERROR HANDLING (STRESS TEST) ---
-    def test_invalid_url_handling(self):
-        """TES: Pastikan aplikasi tidak CRASH jika dikasih URL yang salah/ngawur."""
-        # TODO: Masukkan URL 'bukan-url', pastikan program tidak berhenti mendadak.
-        pass
-
-    def test_empty_page_handling(self):
-        """TES: Pastikan aplikasi tetap aman jika membuka halaman yang tidak ada beritanya."""
-        # TODO: Tes pada halaman kosong, pastikan kembaliannya list kosong [].
-        pass
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

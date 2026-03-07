@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 class NewsDatabase:
-    def __init__(self, db_name="B6_PyQt/news_scraper.db"):
+    def __init__(self, db_name="news_scraper.db"):
         self.db_name = db_name
         self.create_table()
 
@@ -39,6 +39,7 @@ class NewsDatabase:
 
     def get_filtered_articles(self, start_date=None, end_date=None):
         conn = sqlite3.connect(self.db_name)
+
         query = "SELECT publish_date, title, url FROM articles"
         params = []
         
